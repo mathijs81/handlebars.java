@@ -78,7 +78,8 @@ public abstract class MemberValueResolver<M extends Member> implements ValueReso
       Set<M> members = members(clazz);
       for (M m : members) {
         // Mark as accessible.
-        if (m instanceof AccessibleObject) {
+        if (!isPublic(m) && m instanceof AccessibleObject && !(((AccessibleObject) m)
+            .isAccessible())) {
           ((AccessibleObject) m).setAccessible(true);
         }
         mcache.put(memberName(m), m);
